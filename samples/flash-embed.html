@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>AMP - Samples - Flash Embed</title>
+		<link type="text/css" rel="stylesheet" href="../resources/styles/styles.css" />
+		<!--Player-->
+        <script type="text/javascript" src="../resources/js/swfobject.js"></script>
+        <script type="text/javascript" src="../resources/js/connectivity.js"></script>
+        <script type="text/javascript">
+            //For version detection, set to min. required Flash Player version, or 0 (or 0.0.0), for no version detection.
+            
+            var swfVersionStr = "10.1.0";
+            var xiSwfUrlStr = "../playerProductInstall.swf";
+            var flashvars =
+            {
+            	video_url: "http://mediapm.edgesuite.net/edgeflash/public/debug/assets/smil/buckbunny-vod.smil",
+				settings_url: 'samples.flash.xml',
+                auto_play: 'false',
+				cache_bust_key: 123456,
+				location: window.location.host,
+				location: window.location.host+window.location.pathname,
+				controls: true,
+				auto_hide: 2,
+				report_customDimension: "customDimension-value-flashVars",
+				report_streamUse: "streamUse-value-flashVars",
+				report_dimensionFlashvar: "dimensionFlashvar-value",
+				is_token_required: "false",
+				poster: "../resources/images/bunny.jpg",
+				title: "Big Buck Bunny",
+				use_netsession_client: "false"
+			};
+
+			var params =
+			{
+				allowFullScreen: 'true',
+				allowScriptAccess: 'always',
+				bgcolor:"#000000",
+				wmode: 'direct'
+			};
+
+            var debug = /debug=true/.test(location.search);
+			var swf   = (debug) ? '../amp/AkamaiStandardPlayer-debug.swf' : '../amp/AkamaiStandardPlayer.swf';
+
+            swfobject.embedSWF
+            	( swf
+            	, 'akamai-media-player'
+            	, '100%', '100%'
+            	, swfVersionStr
+            	, xiSwfUrlStr
+            	, flashvars
+            	, params
+            	, { name: 'akamai-media-player' }
+            );
+		</script>
+	</head>
+	<!-- HACK: ontouchstart="" is a workaround that enables the use of the CSS :active psuedo class on iOS -->
+	<body onload="loadHandler(event)" ontouchstart="">
+		<div class="page">
+			<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+            <div class="content">
+            	<h3>AMP: Samples</h3>
+    			<h5>Flash Embed</h5>
+    			<div class="sample-player">
+        			<div id="akamai-media-player"></div>
+        			<noscript>
+						<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="604" height="341" id="akamaiStandardPlayer">
+							<param name="movie" value="../amp/AkamaiStandardPlayer.swf" />
+							<param name="quality" value="high" />
+							<param name="bgcolor" value="#000000" />
+							<param name="allowScriptAccess" value="always" />
+							<param name="allowFullScreen" value="true" />
+							<!--[if !IE]>-->
+							<object type="application/x-shockwave-flash" data="../amp/AkamaiStandardPlayer.swf" width="604" height="341">
+								<param name="quality" value="high" />
+								<param name="bgcolor" value="#000000" />
+								<param name="allowScriptAccess" value="always" />
+								<param name="allowFullScreen" value="true" />
+							<!--<![endif]-->
+							<!--[if gte IE 6]>-->
+								<p>
+									Either scripts and active content are not permitted to run or Adobe Flash Player version
+									10.0.0 or greater is not installed.
+								</p>
+							<!--<![endif]-->
+								<a href="http://www.adobe.com/go/getflashplayer">
+									<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash Player" />
+								</a>
+							<!--[if !IE]>-->
+							</object>
+							<!--<![endif]-->
+						</object>
+					</noscript>
+        		</div>
+            </div>
+	   	</div>
+	</body>
+</html>

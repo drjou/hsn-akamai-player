@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="utf-8" />
+    	<title>AMP - Support</title>
+    	<link rel="icon" href="http://www.akamai.com/favicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="http://www.akamai.com/favicon.ico" type="image/x-icon">
+        <link type="text/css" rel="stylesheet" href="../resources/styles/styles.css" />
+        <style>
+			#browser-warning
+        	{
+        		position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: #CCCCCC;
+				top: 0px;
+				left: 0px;
+				padding-top: 25%;
+        	}
+        	
+        	table
+        	{
+        	    width: 100%;
+        	}
+        	
+        	input[type=text]
+            {
+                width: 95%;
+            }
+            
+            #pageURL, #iframeURL
+            {
+                width: 35%;
+            }
+        </style>
+        <script type="text/javascript" src="../amp/amp.min.js"></script>
+        <script type="text/javascript">
+			var amp, 
+				query = window.location.search, 
+				path = location.pathname.replace("index.html", "")
+				origin = location.protocol + "//" + location.host + path;
+			
+			function browserCheck()
+			{
+				//check for old IE
+				var ua = navigator.userAgent,
+					regExp = /MSIE (d.d)/;
+				
+				if (regExp.test(ua))
+				{
+					if (Number(RegExp.$1) < 9)
+					{
+						return false;
+					}
+				}
+				
+				return true;
+			}
+			
+           	function loadHandler(event) 
+           	{  	
+           		if (!browserCheck())
+           		{
+           			document.getElementById("browser-warning").className = "";
+           			return;
+           		}
+	        
+           		if (query != null)
+					populatePage();
+   			}
+   			
+   			function populatePage()
+   			{
+   				var i, length, source, 
+   					sources = QueryString.source,
+   					iframe = document.getElementById("player"),
+   					pageURL = document.getElementById("pageURL"),
+   					iframeURL = document.getElementById("iframeURL");
+   				
+   				if (QueryString.title != null)
+   					document.getElementById("title").value = QueryString.title;
+   				
+   				if (QueryString.poster != null)
+   					document.getElementById("poster").value = QueryString.poster;
+   				
+   				if (QueryString.autoplay)
+   					document.getElementById("autoplay").selectedIndex = (QueryString.autoplay == "true") ? 1 : 0;
+   				
+   				if (QueryString.temporalType)
+   					document.getElementById("temporalType").selectedIndex = (QueryString.temporalType == "live") ? 1 : 0;
+   				
+   				if (QueryString.analytics)
+   					document.getElementById("analytics").value = QueryString.analytics;
+   				
+   				if (sources != null)
+   				{
+   					sources = JSON.parse(sources);
+   					
+   					for (i=0, length=sources.length; i<length; i++)
+   					{
+   						source = sources[i];
+   						
+   						if (source.src != null)
+   							document.getElementById("src" + i).value = source.src;
+   						
+   						if (source.type != null)
+   							document.getElementById("type" + i).value = source.type;
+   						
+   						if (source.label != null)
+   							document.getElementById("label" + i).value = source.label;
+   					}
+   				}
+   				
+   				if (QueryString.captioning)
+   				{
+   				    var captioning = JSON.parse(unescape(QueryString.captioning));
+   				    document.getElementById("captioningURI").value = captioning.src;
+   				    document.getElementById("captioningType").value = captioning.type;
+   				}
+                    
+   				
+   				iframe.src =  origin + "player.html?" + query + "&debug=true";
+   				
+   				iframeURL.value = origin + "player.html?" + query;
+   				pageURL.value = location.href;
+   			}
+   			
+   			function updateType(index)
+   			{
+   				var src = document.getElementById("src"+index).value,
+   					ext = Utils.getMimeType(src);
+   					
+   				if (ext != null)
+   					document.getElementById("type"+index).value = ext;	
+   			}
+   			
+   			function generate()
+   			{
+   				var queryVars = {}, sselect, value, sources = [],
+   					iframe = document.getElementById("player"),
+   					pageURL = document.getElementById("pageURL"),
+   					iframeURL = document.getElementById("iframeURL");
+   					   				
+   				if (document.getElementById("title").value != null)
+   					queryVars.title = document.getElementById("title").value;
+   					
+   				if (document.getElementById("poster").value != null)
+   					queryVars.poster = document.getElementById("poster").value;
+   					
+   				if (document.getElementById("analytics").value != null)
+   					queryVars.analytics = document.getElementById("analytics").value;
+   				
+   				select = document.getElementById("autoplay");
+   				value = select.options[select.selectedIndex].value;
+   				if (value != null && value != "")
+   					queryVars.autoplay = (value == "true");
+   			
+   				select = document.getElementById("temporalType");
+   				value = select.options[select.selectedIndex].value;
+   				if (value != null && value != "")
+   					queryVars.temporalType = value;
+   				
+   				for (i=0, length=3; i<length; i++)
+				{
+					source = {};
+					
+					value = document.getElementById("src" + i).value
+					if (value != null && value != "")
+						source.src = value;
+					
+					value = document.getElementById("type" + i).value
+					if (value != null && value != "")
+						source.type = value;
+					
+					value = document.getElementById("label" + i).value
+					if (value != null && value != "")
+						source.label = value;
+							
+					if (source.src != null || source.type != null || source.label != null)
+						sources.push(source);
+				}
+				
+				if (sources.length > 0)
+					queryVars.source = JSON.stringify(sources);
+					
+                //captioning
+                value = 
+                {
+                    kind: "captioning",
+                    src: document.getElementById("captioningURI").value,
+                    type: document.getElementById("captioningType").value
+                }
+                if (value.type != null && value.type != "")
+                    queryVars.captioning = encodeURIComponent(JSON.stringify(value));
+   				
+   				iframeURL.value = 
+   				iframe.src 		= origin + "player.html?debug=true&" + QueryString.serialize(queryVars);
+   				
+   				pageURL.value = origin + "?" + QueryString.serialize(queryVars);
+   			}
+            
+            function log(msg)
+            {
+            	var console = document.getElementById('console-text-area'),
+            		time	= new Date();
+            		str		= time + ": " + msg + "\n" + console.value;
+            		
+            	console.value = str;
+            }
+            
+            function logEvent(event)
+            {
+            	log(event.data.type);
+            }
+            
+            try
+	        {
+	        	window.addEventListener("message", logEvent, false);
+	        }
+	        catch (error)
+	        {
+	        	window.attachEvent("onmessage", logEvent);
+	        }
+	        
+	        function toggleSection(id)
+	        {
+	        	var form = document.querySelector("#" + id + " .section-body"),
+	        		button	= document.querySelector("#" + id + " button");
+	        		
+	        	form.classList.toggle("hidden");
+	        	button.textContent = (button.textContent == "hide") ? "show" : "hide";
+	        }
+	        
+	        function popout()
+	        {
+	        	window.open(document.getElementById("player").src, "_blank", "width=604,height=341,toolbar=no,status=no,scrollbars=no,location=yes");
+	        }
+	        
+	        function selectAll(event)
+	        {
+	        	event.target.select();
+	        }
+	        
+	        try
+	        {
+	        	window.addEventListener("DOMContentLoaded", loadHandler);
+	        }
+	        catch (error)
+	        {
+	        	window.onload = loadHandler;
+	        }
+    	</script>
+    </head>
+    <body>
+    	<div class="page">
+	    	<div id="browser-warning" class="hidden">Please view this page in a modern browser.</div>
+	    	<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+	        <section class="content">
+	        	<h3>Support Player</h3>
+	        	<p>Enter information below to preview your content in AMP.</p>
+		    	<section id="player-section" class="section">
+		    		<header class="section-header"><label>Player</label><button class="section-header-button" onclick="toggleSection('player-section');">hide</button></header>
+		    		<section class="section-body">
+		    			<div class="sample-player">
+		    				<iframe id="player" width="100%" height="100%"></iframe>
+		    			</div>
+		    		</section>
+		    	</section>
+		    	<section id="configuration-section" class="section">
+		    		<header class="section-header"><label class="section-header-label">Configuration</label><button class="section-header-button" onclick="toggleSection('configuration-section');">hide</button></header>
+			    	<form class="section-body">
+			    		<table>
+			    			<tr>
+			    				<td><label>Title:</label></td>
+			    				<td><input id="title" name="title" type="text" /></td>
+			    			</tr>
+			    			<tr>
+			    				<td><label>Poster:</label></td>
+			    				<td><input id="poster" name="poster" type="text" /></td>
+			    			</tr>
+			    			<tr>
+			    				<td><label>Analytics:</label></td>
+			    				<td><input id="analytics" name="analytics" type="text" /></td>
+			    			</tr>
+			    			<tr>
+			    				<td><label>Autoplay:</label></td>
+			    				<td>
+			    					<select id="autoplay" name="autoplay">
+			    						<option value="false">false</option>
+			    						<option value="true">true</option>
+			    					</select>
+			    				</td>
+			    			</tr>
+			    			<tr>
+			    				<td><label>Live:</label></td>
+			    				<td>
+			    					<select id="temporalType" name="temporalType">
+			    						<option value="">No</option>
+			    						<option value="live">Yes</option>
+			    					</select>
+			    				</td>
+			    			</tr>
+			    			<tr>
+			    				<td valign="top"><label>Source:</label></td>
+			    				<td>
+			    					<table>
+						    			<tr>
+						    				<th>Stream URL</th>
+						    				<th>Type</th>
+						    				<th>Label</th>
+						    			</tr>
+						    			<tr>
+						    				<td><input type="text" id="src0" name="src0" onchange="updateType(0);" /></td>
+						    				<td><input type="text" id="type0" name="type0" /></td>
+						    				<td><input type="text" id="label0" name="label0" /></td>
+						    			</tr>
+						    			<tr>
+						    				<td><input type="text" id="src1" name="src1" onchange="updateType(1);" /></td>
+						    				<td><input type="text" id="type1" name="type1" /></td>
+						    				<td><input type="text" id="label1" name="label1" /></td>
+						    			</tr>
+						    			<tr>
+						    				<td><input type="text" id="src2" name="src2" onchange="updateType(2);" /></td>
+						    				<td><input type="text" id="type2" name="type2" /></td>
+						    				<td><input type="text" id="label2" name="label2" /></td>
+						    			</tr>
+						    		</table>
+			    				</td>
+			    			</tr>
+			    			<tr>
+                                <td valign="top"><label>Captions:</label></td>
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Source</th>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select id="captioningType" name="captioningType">
+                                                    <option value="">None</option>
+                                                    <option value="application/ttml+xml">VOD - DFXP</option>
+                                                    <option value="live-oncaptioninfo">Live - OnCaptionInfo 708</option>
+                                                    <option value="live-oncuepoint">Live - OnCuepoint</option>
+                                                    <option value="live-subply">Live - SubPly</option>
+                                                </select>
+                                            </td>
+                                            <td><input type="text" id="captioningURI" name="captioningURI" /></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+			    			<tr>
+			    				<td><input type="button" value="Generate" onclick="generate()" /></td>
+			    			</tr>
+			    		</table>
+			    	</form>
+		    	</section>
+		    	<section id="url-section" class="section">
+		    		<header class="section-header"><label class="section-header-label">URLs</label><button class="section-header-button" onclick="toggleSection('url-section');">hide</button></header>
+		    		<form class="section-body">
+		    			<label>Page: </label><input id="pageURL" name="pageURL" type="text" onclick="selectAll(event);" readonly />
+		    			<label>IFrame: </label><input id="iframeURL" name="iframeURL" type="text" onclick="selectAll(event);" readonly />
+		    			<input type="button" value="Pop out" onclick="popout()" />
+		    		</form>
+		    	</section>
+			    <section id="console-section" class="section">
+			    	<header class="section-header"><label class="section-header-label">Console</label><button class="section-header-button" onclick="toggleSection('console-section');">hide</button></header>
+			    	<form class="section-body">
+			    		<textarea id="console-text-area" wrap='off' height="auto"></textarea>
+			    	</form>
+				</section>
+	        </section>
+		</div>
+	</body>
+</html>

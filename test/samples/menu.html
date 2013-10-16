@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>AMP - Samples - Menu</title>
+		<link type="text/css" rel="stylesheet" href="../resources/styles/styles.css" />
+		<style>
+			.menu
+			{
+				text-align: center;
+				margin: 20px 0px 20px 0px;
+			}
+		</style>
+		<!--Player-->
+        <script type="text/javascript"  src="../amp/amp.min.js?samples.xml"></script>
+        <script type="text/javascript">
+            var amp;
+            
+            var videos = 
+            [
+           		{
+           			autoplay: true,
+            		title: "HD World",
+            		poster: '../resources/images/hd_world.jpg',
+            		source: 
+            		[
+						{src: "http://multiplatform-f.akamaihd.net/z/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,1280x720_1900_m,1280x720_2500_m,1280x720_3500_m,.mp4.csmil/manifest.f4m", type: "video/f4m"},
+						{src: "http://multiplatform-f.akamaihd.net/i/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,1280x720_1900_m,1280x720_2500_m,1280x720_3500_m,.mp4.csmil/master.m3u8", type: "application/x-mpegURL"}
+					]
+            	},
+            	{
+            		autoplay: true,
+            		temporalType: "live",
+            		title: "NASA Live",
+            		source: 
+            		[
+						{src: "http://pubsec.edgesuite.net/smil/nasa/nasa_tv.smil", type: "application/smil+xml"},
+						{src: "http://www.nasa.gov/multimedia/nasatv/NTV-Public-IPS.m3u8", type: "application/x-mpegURL"}
+					]
+            	},
+            	{
+            		autoplay: true,
+            		title: "Demo Stream",
+            		temporalType: "live",
+            		source: 
+            		[
+						{src: "http://multiformatlive-f.akamaihd.net/z/demostream_1@2131/manifest.f4m", type: "video/f4m"},
+						{src: "http://multiformatlive-f.akamaihd.net/i/demostream_1@2131/master.m3u8", type: "application/x-mpegURL"}
+					]
+            	},
+            	{
+            		autoplay: true,
+            		title: "Space Alone",
+            		poster: '../resources/images/space_alone.jpg',
+            		src: "http://mediapm.edgesuite.net/osmf/content/test/spacealonehd_sounas_640_700.mp4",
+            		captioning:
+            		{
+            			url: "../resources/captioning/captioning.xml"
+            		}
+            	}
+            ]
+            
+            function loadHandler(event)
+            {
+            	var config = 
+            	{
+            		autoplay: true,
+            		media: videos[0]
+            	};
+                amp	= new AMP("akamai-media-player", config);
+            }
+            
+            function loadVideo(value)
+            {
+            	console.debug(value, videos[value])
+            	amp.setMedia(videos[value]);
+            }
+        </script>
+	</head>
+	<!-- HACK: ontouchstart="" is a workaround that enables the use of the CSS :active psuedo class on iOS -->
+	<body onload="loadHandler(event)" ontouchstart="">
+		<div class="page">
+	    	<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+            <div class="content">
+            	<h3>AMP: Samples</h3>
+	    		<h5>Menu</h5>
+            	<div class="sample-player">
+            		<div id="akamai-media-player"></div>
+            	</div>
+            	<div class="menu">
+	            	<a href="#" onclick="loadVideo(0)">Video 1</a> |
+	            	<a href="#" onclick="loadVideo(1)">Video 2</a> |
+	            	<a href="#" onclick="loadVideo(2)">Video 3</a> |
+	            	<a href="#" onclick="loadVideo(3)">Video 4</a>
+	            </div>
+            </div>
+	   	</div>
+	</body>
+</html>

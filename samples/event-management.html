@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>AMP - Samples - Live Event Management</title>
+		<link type="text/css" rel="stylesheet" href="../resources/styles/styles.css" />
+		<!--Player-->
+        <script type="text/javascript"  src="../amp/amp.min.js?samples.xml"></script>
+        <script type="text/javascript">
+            var amp, config_overrides;
+            
+            function loadHandler(event)
+            {
+            	config_overrides = 
+            	{
+            		autoplay: true,
+            		media:
+            		{
+            			title: "PDL Sample - Space Alone",
+	            		poster: '../resources/images/space_alone.jpg',
+	            		source:
+	            		[
+							{src: "http://pubsec.edgesuite.net/smil/nasa/nasa_tv.smil", type: "application/smil+xml"},
+							{src: "http://www.nasa.gov/multimedia/nasatv/NTV-Public-IPS.m3u8", type: "application/x-mpegURL"}
+						]
+            		},
+            		eventmanagement:
+            		{
+            			enabled: true,
+            			url: "../resources/eventmanagement/playerstate.txt",
+            			interval: 5,
+            			states:
+            			[
+            				{id: "pre", poster: "../resources/eventmanagement/pre_slate.png"},
+            				{id: "post", poster: "../resources/eventmanagement/post_slate.png"},
+            				{id: "error", poster: "../resources/eventmanagement/error_slate.png"},
+            				{id: "off", poster: "../resources/eventmanagement/off_slate.png"}
+            			]	
+            		}
+            	}
+                amp = new AMP("akamai-media-player", config_overrides);
+                
+                updateMenu();
+            }
+            
+            function updateMenu()
+            {
+            	var state = Utils.read(config_overrides.eventmanagement.url);
+            	document.getElementById("stateSelect").value = state;
+            }
+            
+            function stateChangeHandler(event)
+            {
+            	var value = document.getElementById("stateSelect").value;
+            	Utils.send(config_overrides.eventmanagement.url, value);
+            }
+        </script>
+	</head>
+	<!-- HACK: ontouchstart="" is a workaround that enables the use of the CSS :active psuedo class on iOS -->
+	<body onload="loadHandler(event)" ontouchstart="">
+		<div class="page">
+	    	<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+            <div class="content">
+            	<h3>AMP: Samples</h3>
+	    		<h5>Live Event Management</h5>
+            	<div class="sample-player">
+            		<div id="akamai-media-player"></div>
+            	</div>
+            	<div class="menu">
+	        		<select id="stateSelect">
+	        			<option>pre</option>
+	        			<option>on</option>
+	        			<option>post</option>
+	        			<option>error</option>
+	        			<option>off</option>
+	        		</select>
+	        		<button onclick="stateChangeHandler(event)">Set State</button>
+	        	</div>
+            </div>
+	   	</div>
+	</body>
+</html>

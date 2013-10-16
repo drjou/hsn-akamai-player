@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    	<title>AMP - Samples - API</title>
+        <link type="text/css" rel="stylesheet" href="../resources/styles/styles.css" />
+        <style>
+        	#consoleWrapper
+        	{
+        		text-align: center;
+        		margin: auto;
+        		width: 640px;
+        		height: 100px;
+        		margin-top: 10px;
+        	}
+        	
+        	#console-text-area
+        	{
+        		width: 100%;
+        		height: 100%;
+        	}
+        </style>
+		<!--Player-->
+        <script type="text/javascript"  src="../amp/amp.min.js?samples.xml"></script>
+        <script type="text/javascript">
+			var amp,
+            	videos = 
+	            [
+	           		{
+	            		title: "HD World",
+	            		poster: '../resources/images/hd_world.jpg',
+	            		source: 
+	            		[
+							{src: "http://multiplatform-f.akamaihd.net/z/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,1280x720_1900_m,1280x720_2500_m,1280x720_3500_m,.mp4.csmil/manifest.f4m", type: "video/f4m"},
+							{src: "http://multiplatform-f.akamaihd.net/i/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,1280x720_1900_m,1280x720_2500_m,1280x720_3500_m,.mp4.csmil/master.m3u8", type: "application/x-mpegURL"}
+						]
+	            	},
+	            	{
+	            		title: "NASA Live",
+	            		poster: '../resources/images/space_alone.jpg',
+	            		temporalType: "live",
+	            		source: 
+	            		[
+							{src: "http://pubsec.edgesuite.net/smil/nasa/nasa_tv.smil", type: "application/smil+xml"},
+							{src: "http://www.nasa.gov/multimedia/nasatv/NTV-Public-IPS.m3u8", type: "application/x-mpegURL"}
+						]
+	            	},
+	            	{
+	            		title: "Demo Stream",
+	            		poster: '../resources/images/space_alone.jpg',
+	            		source: 
+	            		[
+							{src: "http://multiformatlive-f.akamaihd.net/z/demostream_1@2131/manifest.f4m", type: "video/f4m"},
+							{src: "http://multiformatlive-f.akamaihd.net/i/demostream_1@2131/master.m3u8", type: "application/x-mpegURL"}
+						]
+	            	},
+	            	{
+	            		title: "Space Alone",
+	            		poster: '../resources/images/space_alone.jpg',
+	            		src: "http://mediapm.edgesuite.net/osmf/content/test/spacealonehd_sounas_640_700.mp4"
+	            	},
+	            ]
+            
+        	function loadHandler(event) 
+        	{  	
+			  	var config =
+			  	{
+			  		media: videos[0],
+			  		autoplay: true
+			  	} 
+			  	
+                amp = new AMP("akamai-media-player", config);
+                
+                amp.addEventListener("canplay", logEvent);
+                amp.addEventListener("canplaythrough", logEvent);
+                amp.addEventListener("loadedmetadata", logEvent);
+            	amp.addEventListener("loadstart", logEvent);
+            	amp.addEventListener("playing", logEvent);
+            	amp.addEventListener("ended", endedHandler);
+            	amp.addEventListener("pause", logEvent);
+            	amp.addEventListener("waiting", logEvent);
+            	amp.addEventListener("durationchange", durationChangeHandler);
+            	amp.addEventListener("volumechange", logEvent);
+            	amp.addEventListener("timeupdate", timeUpdateHandler);
+            	amp.addEventListener("seeking", logEvent);
+            	amp.addEventListener("seeked", logEvent);
+			}
+			
+			function loadVideo(value)
+            {
+            	amp.setMedia(videos[value]);
+            	amp.play();
+            }
+			
+			function endedHandler(event)
+			{
+				logEvent(event);
+			}
+            
+            function durationChangeHandler(event)
+            {
+            	logEvent(event);
+            	
+            	document.getElementById('duration-view').textContent = Math.round(amp.getDuration());
+            }
+            
+            function timeUpdateHandler(event)
+            {
+            	document.getElementById('current-time-view').textContent = Math.round(amp.getCurrentTime());
+            }
+            
+            function log(msg)
+            {
+            	var console = document.getElementById('console-text-area'),
+            		time	= new Date(Date.now()),
+            		str		= time + ": " + msg + "\n" + console.value;
+            		
+            	console.value = str;
+            }
+            
+            function logEvent(event)
+            {
+            	log(event.type);
+            }
+            
+           	function playHandler(event)
+           	{
+           		amp.play();
+           	}
+           	
+           	function pauseHandler(event)
+           	{
+           		amp.pause();
+           	}
+           	
+           	function seekHandler(event)
+           	{
+           		amp.setCurrentTime(document.getElementById("seek-text").value);
+           	}
+           	
+           	function stopHandler(event)
+           	{
+           		amp.end();
+           	}
+           	
+           	function resizeHandler(event)
+           	{
+           		resize(document.getElementById("width-text").value, document.getElementById("height-text").value);
+           	}
+            
+			function setSrcHandler(event)
+			{
+				amp.setSrc(document.getElementById('set-src-text').value);
+				amp.play();
+			}
+			
+			function getSrcHandler(event)
+			{
+				document.getElementById('get-src-text').value = amp.getSrc();
+			}
+			
+			function videoSelectHandler(event)
+			{
+				var index 	= parseInt(document.getElementById('set-src-select').value),
+					video	= videos[index];
+					
+				amp.setMedia(video);
+				amp.play();
+			}
+			
+			function resize(w, h)
+			{	
+				var p 			= document.getElementById("contentWrapper");
+				p.style.width 	= w+"px";
+				p.style.height	= h+"px";
+			}
+    	</script>
+    </head>
+    <body onload="loadHandler(event)" ontouchstart="">
+    	<div class="page">
+	    	<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+            <div class="content">
+            	<h3>AMP: Samples</h3>
+	    		<h5>API</h5>
+            	<div class="sample-player">
+            		<div id="akamai-media-player"></div>
+            	</div>
+            	<div id="controlsWrapper">
+			        <div id="controls">
+			       		<div class="controls-row">
+				        	<input id="play-button" name="playButton" class="player-button" type="button" value="Play" onclick="playHandler(event);" />
+				        	<input id="pause-button" name="pauseButton" class="player-button" type="button" value="Pause" onclick="pauseHandler(event);" />
+				        	<input id="stop-button" name="stopButton" class="player-button" type="button" value="Stop" onclick="stopHandler(event);" />
+				          	<span id="current-time-view"></span> / <span id="duration-view"></span>
+				          	<input type="text" class="player-field" id="seek-text" size="4" maxlength="4" value="30" />
+				          	<input type="button" class="player-field" id="seek-button" value="Seek" onclick="seekHandler(event);" />
+			           	</div>
+			           	<div class="controls-row">
+			           		<input id="width-text" type="text" class="player-field" size="4" maxlenght="4" value="604" /> X <input id="height-text" type="text" class="player-field" size="4" maxlenght="4" value="341" />
+							<input id="resize-button" name="resize-button" class="player-button" type="button" value="Resize" onclick="resizeHandler(event);"/>
+			           	</div>
+			           	<div class="controls-row">
+			            	<input id="set-src-button" class="player-button" type="button" value="Set Src" onclick="setSrcHandler(event);" />
+							<input type="text" class="feed-player-input" id="set-src-text" />
+			            </div>
+			            <div class="controls-row">
+			            	<input id="get-src-button" class="player-button" type="button" value="Get Src" onclick="getSrcHandler(event);" />
+							<input type="text" class="feed-player-input" id="get-src-text" />
+			            </div>
+			            <div class="controls-row">
+			            	<select  id="set-src-select">
+								<option></option>
+								<option value="0">HD World</option>
+								<option value="1">NASA Live</option>
+								<option value="2">Demo Stream</option>
+								<option value="3">Space Alone</option>
+							</select>
+							<input id="load-video-button" class="player-button" type="button" value="Load Video" onclick="videoSelectHandler(event);" />
+			           	</div>
+			        </div>
+				</div>
+			    <div id="consoleWrapper">
+			    	<textarea id="console-text-area" wrap="off"></textarea>
+				</div>
+            </div>
+	   	</div>
+	</body>
+</html>

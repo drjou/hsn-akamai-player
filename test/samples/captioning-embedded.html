@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>AMP - Samples - Embedded Captions</title>
+		<link type="text/css" rel="stylesheet" href="../resources/styles/styles.css" />
+		<!--Player-->
+        <script type="text/javascript"  src="../amp/amp.min.js?samples.xml"></script>
+        <script type="text/javascript">
+            var amp, media,
+				embeddedMedia = 
+        		{
+        			temporalType: "live",
+            		title: "Embedded Captions Sample - CC",
+            		poster: '../resources/images/space_alone.jpg',
+            		source:
+            		[
+						{src: "http://pubsec.edgesuite.net/smil/nasa/nasa_tv.smil?embedded=true", type: "application/smil+xml"},
+						{src: "http://www.nasa.gov/multimedia/nasatv/NTV-Public-IPS.m3u8?embedded=true", type: "application/x-mpegURL"}
+					]
+				}
+            
+            function loadHandler(event)
+            {
+            	var config_overrides = 
+            	{
+            		autoplay: false,
+					captioning:
+					{
+						enabled: true,
+						embedded: true
+					},
+					media:
+            		{
+            			temporalType: "live",
+	            		title: "Embedded Captions Sample",
+	            		poster: '../resources/images/space_alone.jpg',
+	            		source:
+	            		[
+							{src: "http://pubsec.edgesuite.net/smil/nasa/nasa_tv.smil", type: "application/smil+xml"},
+							{src: "http://www.nasa.gov/multimedia/nasatv/NTV-Public-IPS.m3u8", type: "application/x-mpegURL"}
+						]
+					}
+            	};
+                media = config_overrides.media;
+                amp = new AMP("akamai-media-player", config_overrides);
+                amp.captioning.addEventListener("visibilitychange", switchStreams);
+            }
+            
+            function switchStreams(event)
+            {
+            	//alternate implementation: var item = !event.data ? config_overrides.media : embeddedMedia;
+            	var item = amp.captioning.getHidden() ? media : embeddedMedia;	
+            	item.autoplay = true;
+            	amp.setMedia(item);
+            }
+        </script>
+	</head>
+	<!-- HACK: ontouchstart="" is a workaround that enables the use of the CSS :active psuedo class on iOS -->
+	<body onload="loadHandler(event)" ontouchstart="">
+		<div class="page">
+	    	<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+            <div class="content">
+            	<h3>AMP: Samples</h3>
+	    		<h5>Captioning</h5>
+            	<div class="sample-player"><div id="akamai-media-player"></div></div>
+            </div>
+	   	</div>
+	</body>
+</html>

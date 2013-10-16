@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>AMP - Samples - PDL</title>
+		<link type="text/css" rel="stylesheet" href="../resources/styles/styles.css" />
+		<!--Player-->
+        <script type="text/javascript"  src="../amp/amp.min.js?samples.xml"></script>
+        <script type="text/javascript">
+            var amp;
+            
+            function loadHandler(event)
+            {
+            	var config_overrides = 
+            	{
+            		autoplay: false,
+            		media:
+            		{
+	            		title: "PDL Sample",
+	            		poster: '../resources/images/bunny.jpg',
+	            		source:
+	                    [
+	                        {src: "http://projects.mediadev.edgesuite.net/customers/akamai/video/VfE.mp4", type: "video/mp4"},
+	                        {src: "http://projects.mediadev.edgesuite.net/customers/akamai/video/VfE.webm", type: "video/webm"},
+	                        {src: "http://projects.mediadev.edgesuite.net/customers/akamai/video/VfE.ogg", type: "video/ogg"}
+	                    ]
+            		}
+            	}
+                amp = new AMP("akamai-media-player", config_overrides);
+            }
+        </script>
+	</head>
+	<!-- HACK: ontouchstart="" is a workaround that enables the use of the CSS :active psuedo class on iOS -->
+	<body onload="loadHandler(event)" ontouchstart="">
+		<div class="page">
+	    	<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+            <div class="content">
+            	<h3>AMP: Samples</h3>
+	    		<h5>Progressive Download Video</h5>
+            	<div class="sample-player"><div id="akamai-media-player"></div></div>
+            </div>
+	   	</div>
+	</body>
+</html>

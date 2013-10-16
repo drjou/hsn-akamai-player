@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>AMP</title>
+		<link type="text/css" rel="stylesheet" href="resources/styles/styles.css" />
+		<script>
+			var debug 	= /debug=true/.test(location.search),
+				rules	= document.styleSheets[0].cssRules || document.styleSheets[0].rules,
+				rule, i = 0, count = rules.length;
+			
+			if (debug)
+			{	
+				for (; i< count; i++)
+				{
+					rule = rules[i];
+					if (rule.selectorText == ".debug")
+					{
+						rule.style.display = "inline";
+						break;
+					}
+				}
+			} 
+		</script>
+
+	</head>
+	<body>
+		<div class="page">
+	    	<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+			<div class="content">
+        		<p>The links below are sample implementations of the AMP by Professional Services. 
+        	    To get a better understanding of how the pages work, please look at the source code for each page. 
+        	    Each sample has a corresponding config file and is outlined in the table below. The config file can 
+        	    be edited to change the behavior of the player.</p>
+
+				<h3>Samples:</h3>
+            	<table class="samples">
+            		<tr>
+            	    	<th width="20%">Page</th>
+                	    <th width="50%">Description</th>
+                	    <th width="30%">HTML file</th>
+                  	</tr>
+                  	                    <tr>
+                        <td>Accessibility</td>
+                        <td>Sample implementation for accessibility</td>
+                        <td>
+                            <a href="samples/accessibility.html?debug=true" target="_blank">accessibility.html</a><span class="debug"> - 
+                            (<a href="samples/accessibility.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/accessibility.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>JavaScript API</td>
+                        <td>Sample implementation of the JavaScript API</td>
+                        <td>
+                            <a href="samples/api.html?debug=true" target="_blank">api.html</a><span class="debug"> - 
+                            (<a href="samples/api.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/api.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Audio Playback</td>
+                        <td>Sample implementation for audio playback</td>
+                        <td>
+                            <a href="samples/audio.html?debug=true" target="_blank">audio.html</a><span class="debug"> - 
+                            (<a href="samples/audio.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/audio.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Auto Play</td>
+                        <td>Sample implementation of vod content with auto play enabled</td>
+                        <td>
+                            <a href="samples/autoplay.html?debug=true" target="_blank">autoplay.html</a><span class="debug"> - 
+                            (<a href="samples/autoplay.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/autoplay.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Captioning - VOD / DFXP</td>
+                        <td>Sample implementation for close captioning</td>
+                        <td>
+                            <a href="samples/captioning.html?debug=true" target="_blank">captioning.html</a><span class="debug"> - 
+                            (<a href="samples/captioning.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/captioning.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Captioning - Live / 708</td>
+                        <td>Sample implementation of 708 closed captioning</td>
+                        <td>
+                            <a href="samples/captioning-708.html?debug=true" target="_blank">captioning-708.html</a><span class="debug"> - 
+                            (<a href="samples/captioning-708.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/captioning-708.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Captioning - Live / Cue Point</td>
+                        <td>Sample implementation of cue point closed captioning</td>
+                        <td>
+                            <a href="samples/captioning-cuepoint.html?debug=true" target="_blank">captioning-cuepoint.html</a><span class="debug"> - 
+                            (<a href="samples/captioning-cuepoint.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/captioning-cuepoint.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Captioning - Embedded</td>
+                        <td>Sample implementation for embedded closed captioning</td>
+                        <td>
+                            <a href="samples/captioning-embedded.html?debug=true" target="_blank">captioning-embedded.html</a><span class="debug"> - 
+                            (<a href="samples/captioning-embedded.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/captioning-embedded.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Captioning - Live / Subply</td>
+                        <td>Sample implementation of subply closed captioning</td>
+                        <td>
+                            <a href="samples/captioning-subply.html?debug=true" target="_blank">captioning-subply.html</a><span class="debug"> - 
+                            (<a href="samples/captioning-subply.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/captioning-subply.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Dynamic Configuration Loading</td>
+                        <td>Sample implementation using a dynamically loaded configuration file</td>
+                        <td>
+                            <a href="samples/config.html?debug=true" target="_blank">config.html</a><span class="debug"> - 
+                            (<a href="samples/config.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/config.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>End Slate</td>
+                        <td>Sample implementation of the end slate</td>
+                        <td>
+                            <a href="samples/end-slate.html?debug=true" target="_blank">end-slate.html</a><span class="debug"> - 
+                            (<a href="samples/end-slate.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/end-slate.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Event Management</td>
+                        <td>Sample implementation of live event management</td>
+                        <td>
+                            <a href="samples/event-management.html?debug=true" target="_blank">event-management.html</a><span class="debug"> - 
+                            (<a href="samples/event-management.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/event-management.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Flash Embed (flash only)</td>
+                        <td>Sample implementation embedding the flash player directly to the page.</td>
+                        <td>
+                            <a href="samples/flash-embed.html?debug=true" target="_blank">flash-embed.html</a><span class="debug"> - 
+                            (<a href="samples/flash-embed.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/flash-embed.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>HD Client (flash only)</td>
+                        <td>Sample implementation using Akamai's HD Client</td>
+                        <td>
+                            <a href="samples/hd-client.html?debug=true" target="_blank">hd-client.html</a><span class="debug"> - 
+                            (<a href="samples/hd-client.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/hd-client.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>User Agent Hinting</td>
+                        <td>Sample implementation using user agent hinting</td>
+                        <td>
+                            <a href="samples/hinting.html?debug=true" target="_blank">hinting.html</a><span class="debug"> - 
+                            (<a href="samples/hinting.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/hinting.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Live</td>
+                        <td>Sample implementation of live video</td>
+                        <td>
+                            <a href="samples/live.html?debug=true" target="_blank">live.html</a><span class="debug"> - 
+                            (<a href="samples/live.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/live.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Localization</td>
+                        <td>Sample implementation for localization</td>
+                        <td>
+                            <a href="samples/localization.html?debug=true" target="_blank">localization.html</a><span class="debug"> - 
+                            (<a href="samples/localization.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/localization.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Long Form Content</td>
+                        <td>Sample implementation of long form content (duration >= 1h)</td>
+                        <td>
+                            <a href="samples/long-form.html?debug=true" target="_blank">long-form.html</a><span class="debug"> - 
+                            (<a href="samples/long-form.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/long-form.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Loop</td>
+                        <td>Sample implementation for looped playback</td>
+                        <td>
+                            <a href="samples/loop.html?debug=true" target="_blank">loop.html</a><span class="debug"> - 
+                            (<a href="samples/loop.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/loop.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Menu</td>
+                        <td>Sample menu implementation using the JavaScript API</td>
+                        <td>
+                            <a href="samples/menu.html?debug=true" target="_blank">menu.html</a><span class="debug"> - 
+                            (<a href="samples/menu.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/menu.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Progressive Download</td>
+                        <td>Sample implementation for progressive download</td>
+                        <td>
+                            <a href="samples/pdl.html?debug=true" target="_blank">pdl.html</a><span class="debug"> - 
+                            (<a href="samples/pdl.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/pdl.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Persistent Controls</td>
+                        <td>Sample implementation using persistent controls</td>
+                        <td>
+                            <a href="samples/persistent-controls.html?debug=true" target="_blank">persistent-controls.html</a><span class="debug"> - 
+                            (<a href="samples/persistent-controls.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/persistent-controls.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                                        <tr>
+                        <td>Video On Demand</td>
+                        <td>Sample implementation of vod content</td>
+                        <td>
+                            <a href="samples/vod.html?debug=true" target="_blank">vod.html</a><span class="debug"> - 
+                            (<a href="samples/vod.html?debug=true&mode=flash" target="_blank">Flash</a>)
+                            (<a href="samples/vod.html?debug=true&mode=html" target="_blank">HTML</a>)</span>
+                        </td>
+                    </tr>
+                              		</table>
+	       		<h3>Support:</h3>
+       			<table class="samples">
+            		<tr>
+            	    	<th width="20%">Page</th>
+                	    <th width="50%">Description</th>
+                	    <th width="30%">HTML file</th>
+                  	</tr>
+          	    	<tr>
+            	    	<td>Support</td>
+                	    <td>Support Player</td>
+                	    <td><a href="support/" target="_blank">index.html</a></td>
+          	    	</tr>
+          		</table>
+	       		<h3>Resources:</h3>
+                <table class="samples">
+                    <tr>
+                        <th width="50%">Resource</th>
+                        <th width="50%">File</th>
+                    </tr>
+                    <tr>
+                        <td>Samples Config</td>
+                        <td><a href="samples/samples.xml" target="_blank">samples.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td>Flash Config</td>
+                        <td><a href="samples/samples.flash.xml" target="_blank">samples.flash.xml</a></td>
+                    </tr>
+                    <tr>
+                        <td>Audio Config</td>
+                        <td><a href="samples/samples.audio.xml" target="_blank">samples.audio.xml</a></td>
+                    </tr>
+                </table>
+	        </div>
+	    </div>
+	</body>
+</html>

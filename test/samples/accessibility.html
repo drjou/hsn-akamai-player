@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>AMP - Samples - Accessibility</title>
+		<link type="text/css" rel="stylesheet" href="../resources/styles/styles.css" />
+		<!--Player-->
+        <script type="text/javascript"  src="../amp/amp.min.js?samples.xml"></script>
+        <script type="text/javascript" src="../resources/accessibility/AccessibilityMenu.js"></script>
+        <link rel="stylesheet" type="text/css" href="../resources/accessibility/AccessibilityMenu.css" />
+        <script type="text/javascript">
+            var amp;
+            
+            function loadHandler(event)
+            {
+            	var config_overrides = 
+            	{
+            		autoplay: false,
+            		media:
+            		{
+            			title: "Accessibility",
+            			poster: '../resources/images/space_alone.jpg',
+            			src: "http://mediapm.edgesuite.net/osmf/content/test/spacealonehd_sounas_640_700.mp4"
+            		}
+            	}
+                amp = new AMP("akamai-media-player", config_overrides);
+                amp.addEventListener("playing", playingHandler);
+			    amp.addEventListener("pause", pausedHandler);
+			    amp.addEventListener("ended", pausedHandler);
+			    amp.addEventListener("volumechange", function (event)
+			    {
+			        if (amp.getVolume() <= 0)
+			        {
+			            mutedHandler();
+			        }
+			        else
+			        {
+			            unmutedHandler();
+			        }
+			    });
+            }
+        </script>
+	</head>
+	<!-- HACK: ontouchstart="" is a workaround that enables the use of the CSS :active psuedo class on iOS -->
+	<body onload="loadHandler(event)" ontouchstart="">
+		<div class="page">
+	    	<div class="header">
+	    		<div class="header-logo"></div>
+	    		<div class="header-text">
+	    			<h1>AMP</h1>
+	    			<h2>v3.0.0023</h2>
+	    		</div>
+			</div>
+
+            <div class="content">
+            	<h3>AMP: Samples</h3>
+	    		<h5>Accessibility</h5>
+            	<div class="sample-player"><div id="akamai-media-player"></div></div>
+            	<div id="menu" class="acc_menu">
+					<a id="playButton" class="acc_menu_item hidden" onclick="playHandler(event)" onkeypress="keypressHandler(event, playHandler)" title="Play" tabindex="1">Play</a>
+					<a id="pauseButton" class="acc_menu_item" onclick="pauseHandler(event)" onkeypress="keypressHandler(event, pauseHandler)" title="Pause" tabindex="1">Pause</a>
+					<a id="forwardButton" class="acc_menu_item" onclick="forwardHandler(event)" onkeypress="keypressHandler(event, forwardHandler)" title="Forward 20 Percent" tabindex="2">Forward 20%</a>
+					<a id="backButton" class="acc_menu_item" onclick="backHandler(event)" onkeypress="keypressHandler(event, backHandler)" title="Back 20 Percent" tabindex="3">Back 20%</a>
+					<a id="stopButton" class="acc_menu_item" onclick="stopHandler(event)" onkeypress="keypressHandler(event, stopHandler)" title="Stop" tabindex="4">Stop</a>
+					<a id="volumeUpButton" class="acc_menu_item" onclick="volumeUpHandler(event)" onkeypress="keypressHandler(event, volumeUpHandler)" title="Volume Up" tabindex="5">Volume Up</a>
+					<a id="volumeDownButton" class="acc_menu_item" onclick="volumeDownHandler(event)" onkeypress="keypressHandler(event, volumeDownHandler)" title="Volume Down" tabindex="6">Volume Down</a>
+					<a id="muteButton" class="acc_menu_item" onclick="muteHandler(event)" onkeypress="keypressHandler(event, muteHandler)" title="Mute" tabindex="7">Mute</a>
+					<a id="unmuteButton" class="acc_menu_item hidden" onclick="unmuteHandler(event)" onkeypress="keypressHandler(event, unmuteHandler)" title="Unmute" tabindex="7">Unmute</a>
+				</div>
+            </div>
+	   	</div>
+	</body>
+</html>
