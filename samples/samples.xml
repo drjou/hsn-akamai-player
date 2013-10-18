@@ -77,7 +77,7 @@
 				<js type="String">http://79423.analytics.edgesuite.net/html5/akamaihtml5-min.js</js>
 				<swf type="String">http://79423.analytics.edgesuite.net/csma/plugin/csma.swf</swf>
 			</plugin>
-			<config type="String">http://ma188-r.analytics.edgesuite.net/config/beacon-2114.xml</config>
+			<config type="String">http://ma399-r.analytics.edgesuite.net/config/beacon-5081.xml</config>
 		</mediaanalytics>
 		<locales type="Object">  
 			<en type="Object">

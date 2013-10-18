@@ -22,8 +22,20 @@
 	                    [
 	                        {src: "http://llvid.hsn.com/clips/ngr/36/11504436.mp4", type: "video/mp4"}
 
-	                    ] 
-            		}
+	                    ],
+                        track:
+	                    [
+                            {kind: "captioning", type: "application/ttml+xml", src: "../resources/captioning/captioning.xml"}
+                           /* {kind: "captioning", type: "live-subply", src: "amazon_plymedia_cc_stream1"}*/
+	                    ]
+
+            		},
+
+					captioning:
+					{
+						enabled: true
+					},
+                    mediaanalytics: { enabled: true, dimensions:  { title: "HSNAndroid" , eventName: "HSN1" }}
             	}
                 amp = new AMP("akamai-media-player", config_overrides);
             }

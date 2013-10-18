@@ -34,10 +34,7 @@
 					{
 						enabled: true
 					},
-					mediaanalytics:
-					{
-						enabled: true
-					}
+					mediaanalytics: { enabled: true, dimensions:  { title: "HSNCaptions" , eventName: "HSN1" }}
             	}
                 amp = new AMP("akamai-media-player", config_overrides);
                 amp.addEventListener("captioningvisibilitychange", function (event)
