@@ -38,17 +38,17 @@
 					<element id="captionDisplay" style="bottom: 80px; opacity:1;"/>
 					<element id="controls" visible="true" height="5">
 				        <element id="replay" />
-						<element id="playPause" />
+						<element id="playPause" color="#00a3e0" />
 						<element id="rewind" />
-						<element id="progress" color="#FF0000" />
-						<element id="loaded" color="#00FF00" />
-						<element id="scrubber" />
-						<element id="cc" />
+						<element id="progress" color="#00a3e0" />
+						<element id="loaded" color="#00a3e0" />
+						<element id="scrubber" color="#00a3e0" />
+						<element id="cc" color="#00a3e0" />
 						<element id="stats" />
 						<element id="hdclient" />
-						<element id="volume" color="#0000FF" />
+						<element id="volume" color="#00a3e0" />
 						<element id="fullscreen" />
-						<element id="logo" style="width: 150px; height: 53px; right: 15px; top: 15px; opacity: 0.5; background-image: url('../resources/images/akamai_logo.png');" />
+						<element id="logo" style="width: 104px; height: 104px; right: 15px; top: 15px; opacity: 0.5; background-image: url('../resources/images/hsn-logo.png');" />
 					</element>
 				</view>
 				<plugins>
