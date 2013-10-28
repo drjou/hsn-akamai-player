@@ -25,11 +25,12 @@
             		{
 	            		title: "VOD Sample",
 	            		poster: '../resources/images/hd_world.jpg',
+                        temporalType: "live",
 	            		source:
 	                    [
 	                        {src: "http://multiplatform-f.akamaihd.net/z/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,1280x720_1900_m,1280x720_2500_m,1280x720_3500_m,.mp4.csmil/manifest.f4m", type: "video/f4m"},
 	                        {src: "http://multiplatform-f.akamaihd.net/i/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,1280x720_1900_m,1280x720_2500_m,1280x720_3500_m,.mp4.csmil/master.m3u8", type: "application/x-mpegURL"},
-	                    	{src: "http://media2.foxnews.com/091712/091712_sb_crowley1_FNC_MED.mp4", type: "video/mp4", rules: ["android_gets_mp4"]}
+	                    	{src: "rtsp://hsn.mpl.miisolutions.net/hsn-live01/_definst_/mp4:H1G288p360kB21", type: "video/mp4", rules: ["android_gets_mp4"]}
 	                    ] 
 	            	}
             	}
