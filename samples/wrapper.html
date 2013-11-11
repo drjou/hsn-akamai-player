@@ -19,85 +19,30 @@
         		height: 100%;
         	}
         </style>
-		<!--Player-->
-        <script type="text/javascript"  src="../amp/amp.min.js?samples.xml"></script>
+
         <script type="text/javascript">
-			var amp,
-            	videos = 
-	            [
-	           		{
-	            		title: "HD World",
+            var config_overrides =
+            	{
+            		autoplay: false,
+            		rules:
+            		{
+            			android_gets_mp4:
+            			{
+            				regexp: "Android"
+            			}
+            		},
+            		media:
+            		{
+	            		title: "VOD Sample",
 	            		poster: '../resources/images/hd_world.jpg',
-	            		source: 
-	            		[
-							{src: "http://multiplatform-f.akamaihd.net/z/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,1280x720_1900_m,1280x720_2500_m,1280x720_3500_m,.mp4.csmil/manifest.f4m", type: "video/f4m"},
-							{src: "http://multiplatform-f.akamaihd.net/i/multi/april11/hdworld/hdworld_,512x288_450_b,640x360_700_b,768x432_1000_b,1024x576_1400_m,1280x720_1900_m,1280x720_2500_m,1280x720_3500_m,.mp4.csmil/master.m3u8", type: "application/x-mpegURL"}
-						]
-	            	},
-	            	{
-	            		title: "NASA Live",
-	            		poster: '../resources/images/space_alone.jpg',
-	            		temporalType: "live",
-	            		source: 
-	            		[
-							{src: "http://pubsec.edgesuite.net/smil/nasa/nasa_tv.smil", type: "application/smil+xml"},
-							{src: "http://www.nasa.gov/multimedia/nasatv/NTV-Public-IPS.m3u8", type: "application/x-mpegURL"}
-						]
-	            	},
-	            	{
-	            		title: "Demo Stream",
-	            		poster: '../resources/images/space_alone.jpg',
-	            		source: 
-	            		[
-							{src: "http://multiformatlive-f.akamaihd.net/z/demostream_1@2131/manifest.f4m", type: "video/f4m"},
-							{src: "http://multiformatlive-f.akamaihd.net/i/demostream_1@2131/master.m3u8", type: "application/x-mpegURL"}
-						]
-	            	},
-	            	{
-	            		title: "Space Alone",
-	            		poster: '../resources/images/space_alone.jpg',
-	            		src: "http://mediapm.edgesuite.net/osmf/content/test/spacealonehd_sounas_640_700.mp4"
-	            	},
-	            ]
+	            		source:
+	                    [
+	                        {src: "rtmp://cp87160.edgefcs.net/ondemand/mp4:ODS/clips/ipad/11/11526411.mp4", type: "video/mp4"},
+	                        {src: "http://odv.hsn.com/clips/ipad/11/11526411.mp4", type: "video/mp4"}
+	                    ]
+	            	}
+            	}
 
-
-            var config =
-            {
-                media: videos[0],
-                autoplay: true
-            }
-        	function loadHandler(event) 
-        	{  	
-
-			  	
-               /* amp = new AMP("akamai-media-player", config);
-                
-                amp.addEventListener("canplay", logEvent);
-                amp.addEventListener("canplaythrough", logEvent);
-                amp.addEventListener("loadedmetadata", logEvent);
-            	amp.addEventListener("loadstart", logEvent);
-            	amp.addEventListener("playing", logEvent);
-            	amp.addEventListener("ended", endedHandler);
-            	amp.addEventListener("pause", logEvent);
-            	amp.addEventListener("waiting", logEvent);
-            	amp.addEventListener("durationchange", durationChangeHandler);
-            	amp.addEventListener("volumechange", logEvent);
-            	amp.addEventListener("timeupdate", timeUpdateHandler);
-            	amp.addEventListener("seeking", logEvent);
-            	amp.addEventListener("seeked", logEvent);*/
-			}
-			
-			function loadVideo(value)
-            {
-            	amp.setMedia(videos[value]);
-            	amp.play();
-            }
-			
-			function endedHandler(event)
-			{
-				logEvent(event);
-			}
-            
             function durationChangeHandler(event)
             {
             	logEvent(event);
@@ -105,10 +50,7 @@
             	document.getElementById('duration-view').textContent = Math.round(amp.getDuration());
             }
             
-            function timeUpdateHandler(event)
-            {
-            	document.getElementById('current-time-view').textContent = Math.round(amp.getCurrentTime());
-            }
+
             
             function log(msg)
             {
@@ -118,37 +60,7 @@
             		
             	console.value = str;
             }
-            
-           /* function logEvent(event)
-            {
-            	log(event.type);
-            }*/
-            
-           	function playHandler(event)
-           	{
-           		amp.play();
-           	}
-           	
-           	function pauseHandler(event)
-           	{
-           		amp.pause();
-           	}
-           	
-           	function seekHandler(event)
-           	{
-           		amp.setCurrentTime(document.getElementById("seek-text").value);
-           	}
-           	
-           	function stopHandler(event)
-           	{
-           		amp.end();
-           	}
-           	
-           	function resizeHandler(event)
-           	{
-           		resize(document.getElementById("width-text").value, document.getElementById("height-text").value);
-           	}
-            
+
 			function setSrcHandler(event)
 			{
 				amp.setSrc(document.getElementById('set-src-text').value);
@@ -165,19 +77,13 @@
 				var index 	= parseInt(document.getElementById('set-src-select').value),
 					video	= videos[index];
 					
-				amp.setMedia(video);
-				amp.play();
+				//amp.setMedia(video);
+				//amp.play();
 			}
-			
-			function resize(w, h)
-			{	
-				var p = document.getElementById("akamai-media-player");
-				p.style.width 	= w+"px";
-				p.style.height	= h+"px";
-			}
+
     	</script>
     </head>
-    <body onload="loadHandler(event)" ontouchstart="">
+    <body ontouchstart="">
     	<div class="page">
 	    	<div class="header">
 	    		<div class="header-logo"></div>
@@ -196,23 +102,23 @@
             	<div id="controlsWrapper">
 			        <div id="controls">
 			       		<div class="controls-row">
-				        	<input id="play-button" name="playButton" class="player-button" type="button" value="Play" onclick="playHandler(event);" />
-				        	<input id="pause-button" name="pauseButton" class="player-button" type="button" value="Pause" onclick="pauseHandler(event);" />
-				        	<input id="stop-button" name="stopButton" class="player-button" type="button" value="Stop" onclick="stopHandler(event);" />
+				        	<input id="play-button" name="playButton" class="player-button" type="button" value="Play" />
+				        	<input id="pause-button" name="pauseButton" class="player-button" type="button" value="Pause" />
+				        	<input id="stop-button" name="stopButton" class="player-button" type="button" value="Stop" />
 				          	<span id="current-time-view"></span> / <span id="duration-view"></span>
 				          	<input type="text" class="player-field" id="seek-text" size="4" maxlength="4" value="30" />
-				          	<input type="button" class="player-field" id="seek-button" value="Seek" onclick="seekHandler(event);" />
+				          	<input type="button" class="player-field" id="seek-button" value="Seek" />
 			           	</div>
 			           	<div class="controls-row">
 			           		<input id="width-text" type="text" class="player-field" size="4" maxlenght="4" value="604" /> X <input id="height-text" type="text" class="player-field" size="4" maxlenght="4" value="341" />
-							<input id="resize-button" name="resize-button" class="player-button" type="button" value="Resize" onclick="resizeHandler(event);"/>
+							<input id="resize-button" name="resize-button" class="player-button" type="button" value="Resize"/>
 			           	</div>
 			           	<div class="controls-row">
-			            	<input id="set-src-button" class="player-button" type="button" value="Set Src" onclick="setSrcHandler(event);" />
+			            	<input id="set-src-button" class="player-button" type="button" value="Set Src" />
 							<input type="text" class="feed-player-input" id="set-src-text" />
 			            </div>
 			            <div class="controls-row">
-			            	<input id="get-src-button" class="player-button" type="button" value="Get Src" onclick="getSrcHandler(event);" />
+			            	<input id="get-src-button" class="player-button" type="button" value="Get Src" />
 							<input type="text" class="feed-player-input" id="get-src-text" />
 			            </div>
 			            <div class="controls-row">
@@ -233,12 +139,63 @@
             </div>
 	   	</div>
 
-     <script type="text/javascript"  src="../resources/js/video-base.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+    <!--AMP-->
+    <script type="text/javascript"  src="../amp/amp.min.js?samples.xml"></script>
+    <!-- HSN Player Wrappers -->
+    <script type="text/javascript"  src="../resources/js/video-base.js"></script>
     <script type="text/javascript"  src="../resources/js/video.js"></script>
     <script>
+        var v;
+        $(document).ready(function(){
+            //int video
+            v = new Video(config_overrides, 'akamai-media-player');
 
-       // var v = new Video(true);
-       // v.dance()
+            //debugging
+            var playBtn = $('#play-button');
+            var pauseBtn = $('#pause-button');
+            var stopBtn = $('#stop-button');
+            var seekBtn = $('#seek-button');
+            var seekField = $('#seek-text');
+            var w = $('#width-text');
+            var h = $('#height-text');
+            var resizeBtn = $('#resize-button');
+            var setSrcBtn = $('#set-src-button');
+            var setSrcField = $('#set-src-text');
+            var getSrcBtn = $('#get-src-button');
+            var getSrcField = $('#get-src-text')
+
+            playBtn.on('click', function(){
+                v.play();
+            });
+
+            pauseBtn.on('click', function(){
+                v.pause();
+            });
+
+            stopBtn.on('click', function(){
+                v.stop();
+            });
+
+            seekBtn.on('click', function(){
+                v.setCurrentTime(seekField.val());
+            });
+
+            resizeBtn.on('click', function(){
+                v.resize(w.val(), h.val());
+            });
+
+            setSrcBtn.on('click', function(){
+                v.setSrc(setSrcField.val());
+                v.play();
+            });
+
+            getSrcBtn.on('click', function(){
+                getSrcField.val(v.getSrc());
+            });
+        });
+
+
     </script>
 
 	</body>

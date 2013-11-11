@@ -1,4 +1,5 @@
 var Video = Class.extend({
+    //config override and element
     init: function(config, el){
         this.config = config;
         this.el = el;
@@ -104,7 +105,8 @@ var Video = Class.extend({
     },
 
     onComplete: function(event){
-        log(event.type);
+        //log(event.type);
+        console.log("on complete!")
     },
 
     getEnded: function(){
