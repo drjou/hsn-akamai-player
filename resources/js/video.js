@@ -10,7 +10,7 @@ var Video = Class.extend({
         this.hsnAmp.addEventListener("loadedmetadata", this.logEvent);
         this.hsnAmp.addEventListener("loadstart", this.logEvent);
         this.hsnAmp.addEventListener("playing", this.logEvent);
-        this.hsnAmp.addEventListener("ended", this.onComplete);
+        //this.hsnAmp.addEventListener("ended", this.onComplete);
         this.hsnAmp.addEventListener("pause", this.onPause);
         this.hsnAmp.addEventListener("waiting", this.logEvent);
         this.hsnAmp.addEventListener("durationchange", durationChangeHandler);

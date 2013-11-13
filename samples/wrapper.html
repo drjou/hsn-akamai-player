@@ -21,27 +21,6 @@
         </style>
 
         <script type="text/javascript">
-            var config_overrides =
-            	{
-            		autoplay: false,
-            		rules:
-            		{
-            			android_gets_mp4:
-            			{
-            				regexp: "Android"
-            			}
-            		},
-            		media:
-            		{
-	            		title: "VOD Sample",
-	            		poster: '../resources/images/hd_world.jpg',
-	            		source:
-	                    [
-	                        {src: "rtmp://cp87160.edgefcs.net/ondemand/mp4:ODS/clips/ipad/11/11526411.mp4", type: "video/mp4"},
-	                        {src: "http://odv.hsn.com/clips/ipad/11/11526411.mp4", type: "video/mp4"}
-	                    ]
-	            	}
-            	}
 
             function durationChangeHandler(event)
             {
@@ -122,14 +101,10 @@
 							<input type="text" class="feed-player-input" id="get-src-text" />
 			            </div>
 			            <div class="controls-row">
-			            	<select  id="set-src-select">
-								<option></option>
-								<option value="0">HD World</option>
-								<option value="1">NASA Live</option>
-								<option value="2">Demo Stream</option>
-								<option value="3">Space Alone</option>
+			            	<select id="set-src-select">
+
 							</select>
-							<input id="load-video-button" class="player-button" type="button" value="Load Video" onclick="videoSelectHandler(event);" />
+							<input id="load-video-button" class="player-button" type="button" value="Load Video" />
 			           	</div>
 			        </div>
 				</div>
@@ -146,10 +121,69 @@
     <script type="text/javascript"  src="../resources/js/video-base.js"></script>
     <script type="text/javascript"  src="../resources/js/video.js"></script>
     <script>
+
         var v;
+
+        videos =
+            [
+                {
+                    title: "Test Video 1",
+                    poster: 'http://img.hsni.com/images/prod/arcade/billboard/DoubleTickets_Tuesday_Holiday_660x348.jpg',
+                    source:
+                    [
+                        {src: "rtmp://cp87160.edgefcs.net/ondemand/mp4:ODS/clips/ipad/11/11527111.mp4", type: "video/mp4"},
+                        {src: "http://odv.hsn.com/clips/ipad/11/11527111.mp4", type: "video/mp4"}
+                    ]
+                },
+                {
+                    title: "Cool new Video",
+                    poster: '../resources/images/space_alone.jpg',
+                    temporalType: "live",
+                    source:
+                    [
+                        {src: "rtmp://cp87160.edgefcs.net/ondemand/mp4:ODS/clips/ipad/40/11527540.mp4", type: "video/mp4"},
+                        {src: "http://odv.hsn.com/clips/ipad/40/11527540.mp4", type: "video/mp4"}
+                    ]
+                },
+                {
+                    title: "Today's Special",
+                    poster: 'http://img.hsni.com/images/prod/arcade/billboard/RewardsStore_Holiday_660x348.jpg',
+                    source:
+                    [
+                        {src: "rtmp://cp87160.edgefcs.net/ondemand/mp4:ODS/clips/ipad/88/11492188.mp4", type: "video/mp4"},
+                        {src: "http://odv.hsn.com/clips/ipad/88/11492188.mp4", type: "video/mp4"}
+                    ]
+                },
+                {
+                    title: "Space Alone",
+                    poster: 'http://img.hsni.com/images/prod/arcade/billboard/110713_15532_Arcade_Billboard_v2.jpg',
+                    source:
+                    [
+                        {src: "rtmp://cp87160.edgefcs.net/ondemand/mp4:ODS/clips/ipad/73/11517473.mp4", type: "video/mp4"},
+                        {src: "http://odv.hsn.com/clips/ipad/73/11517473.mp4", type: "video/mp4"}
+                    ]
+                }
+            ];
+
+        var config_overrides =
+            {
+                autoplay: false,
+                rules:
+                {
+                    android_gets_mp4:
+                    {
+                        regexp: "Android"
+                    }
+                },
+                media: videos[0],
+			    autoplay: false
+             }
+
         $(document).ready(function(){
             //int video
             v = new Video(config_overrides, 'akamai-media-player');
+            var player = v.getPlayer();
+            player.addEventListener("ended", customEnder);
 
             //debugging
             var playBtn = $('#play-button');
@@ -163,7 +197,19 @@
             var setSrcBtn = $('#set-src-button');
             var setSrcField = $('#set-src-text');
             var getSrcBtn = $('#get-src-button');
-            var getSrcField = $('#get-src-text')
+            var getSrcField = $('#get-src-text');
+            var loadVideoBtn = $('#load-video-button');
+
+            var videoSelect = document.getElementById('set-src-select');
+
+            for(var currentVideo = 0; currentVideo < videos.length; currentVideo++)
+            {
+                var opt = document.createElement('option');
+                opt.value = currentVideo;
+                opt.innerHTML = videos[currentVideo].title;
+                videoSelect.appendChild(opt);
+               // console.log(videos[currentVideo])
+            }
 
             playBtn.on('click', function(){
                 v.play();
@@ -193,8 +239,18 @@
             getSrcBtn.on('click', function(){
                 getSrcField.val(v.getSrc());
             });
+
+            loadVideoBtn.on('click', function(){
+                var index = parseInt(videoSelect.value);
+                v.setMedia(videos[index]);
+                v.play();
+            });
         });
 
+        function customEnder()
+        {
+            console.log("CUSTOM ENDER!!!!")
+        }
 
     </script>
 
