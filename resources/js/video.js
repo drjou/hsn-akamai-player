@@ -4,7 +4,8 @@ var Video = Class.extend({
         this.config = config;
         this.el = el;
         this.videoElement = document.getElementById(el);
-        this.hsnAmp =  new AMP(el, config);
+        if(!this.hsnAmp)
+            this.hsnAmp =  new AMP(el, config);
         this.hsnAmp.addEventListener("canplay", this.logEvent);
         this.hsnAmp.addEventListener("canplaythrough", this.logEvent);
         this.hsnAmp.addEventListener("loadedmetadata", this.logEvent);
